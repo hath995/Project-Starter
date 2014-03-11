@@ -1,0 +1,15 @@
+{
+  "name": "Protonight Starter Package",
+  "version": "0.0.0",
+  "description": "Simple code to start off with random project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aaron Elligsen",
+  "license": "MIT",
+  "dependencies": {
+    "handlebars": "~2.0.0-alpha.1",
+    "hapi": "~2.2.0"
+  }
+}
