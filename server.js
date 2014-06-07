@@ -65,7 +65,6 @@ server.start( function() {
 });
 
 
-server.start();
 
   //{ method: 'GET', path: '/vendor/jquery-2.1.0.min.js', handler: {file: {path: "./vendor/jquery-2.1.0.min.js"}}}
   //{ method: 'GET', path: '/sample/{stuff*}', handler: { directory: {path:"/sample", listing: true}}},
