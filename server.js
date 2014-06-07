@@ -1,5 +1,8 @@
 
 var Hapi = require('hapi');
+var moment = require('moment');
+var ansi = require('simple-ansi');
+var debug = true;
 var options = {
   views: {
     engines: { html: 'handlebars'},
@@ -11,18 +14,56 @@ var options = {
     origin: ["creativelive.com","localhost","dev.creativelive.com"]
   }
 };
-var server = new Hapi.Server('localhost',8000, options);
+var server_port = 8000;
+var server = new Hapi.Server('localhost',server_port, options);
 
 function viewHandler(request, reply) {
   reply.view("index", {});
 }
 var receivedAnswers = [];
 
+function receiveQuestions(request, reply) {
+  console.log(request.payload);
+  console.log(request.payload.uploads);
+  reply();
+}
+
 server.route([
   { method: 'GET', path: '/', handler: viewHandler},
-  { method: 'POST', path: '/submit', handler: receiveQuestions},
+  { method: 'POST', path: '/submit', handler: receiveQuestions,
+    config: {}
+  
+  },
   { method: 'GET', path: '/vendor/{stuff*}', handler: {directory: {path: "./vendor/"}}}
 ]);
+
+server.on('request', function(request, event, tags) {
+  'use strict';
+  var now, time;
+
+  if (debug === true) {
+    now = moment().format('HH:mm:ss');
+    time = ansi.bold + ansi.gray + now + ansi.reset;
+    console.log(time, '[' + ansi.green + request.method.toUpperCase() + ansi.reset
+      + ']', ansi.blue + ansi.bold + request.path + ansi.reset);
+    if (request.params && request.params.length > 0) {
+      console.log(ansi.yellow,'\tParams: ', request.params, ansi.reset);
+    }
+    if (request.payload) {
+      console.log(ansi.cyan,'\tPayload: ', request.payload, ansi.reset);
+    }
+    if (request.query && Object.keys(request.query).length > 0) {
+      console.log(ansi.magenta,'\tQuery: ', request.query, ansi.reset);
+    }
+  }
+});
+
+server.start( function() {
+  now = moment().format('HH:mm:ss');
+  time = ansi.bold + ansi.gray + now + ansi.reset;
+  console.log('['+ ansi.green + 'INFO' + ansi.reset + ']' + ' ' + time + ' Starting HAPI server at port: ' + ansi.blue + server_port + ansi.reset);
+});
+
 
 server.start();
 

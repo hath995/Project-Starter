@@ -1,5 +1,5 @@
 {
-  "name": "Protonight Starter Package",
+  "name": "Protonight_Starter_Package",
   "version": "0.0.0",
   "description": "Simple code to start off with random project",
   "main": "server.js",
@@ -9,7 +9,9 @@
   "author": "Aaron Elligsen",
   "license": "MIT",
   "dependencies": {
-    "handlebars": "~2.0.0-alpha.1",
-    "hapi": "~2.2.0"
+    "handlebars": "~2.0.0-alpha.2",
+    "hapi": "~4.0.3",
+    "moment": "~2.6.0",
+    "simple-ansi": "0.0.1"
   }
 }
