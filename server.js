@@ -2,6 +2,17 @@
 var Hapi = require('hapi');
 var moment = require('moment');
 var ansi = require('simple-ansi');
+var mysql = require('mysql');
+var creds = require('./creds');
+
+var mydb = mysql.createConnection({
+  host  : 'localhost',
+  database: 'sakila',
+  user  : creds.name,
+  password: creds.pass
+});
+mydb.connect();
+
 var debug = true;
 var options = {
   views: {
@@ -18,7 +29,9 @@ var server_port = 8000;
 var server = new Hapi.Server('localhost',server_port, options);
 
 function viewHandler(request, reply) {
-  reply.view("index", {});
+  mydb.query('SELECT * FROM actor LIMIT 10', function(err, rows, fields) {
+    reply.view("index", {people: rows});
+  });
 }
 var receivedAnswers = [];
 

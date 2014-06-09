@@ -1,11 +1,21 @@
 <html>
 <head>
-  <title>
-  </title>
+  <title>Learn'n AJAX</title>
   <script src="../vendor/jquery-2.1.0.min.js" type="text/javascript"></script>
 </head>
 <body>
-<h1>We're testing uploads</h1>
+<h1>Learning Ajax and Server side programmring</h1>
+<table>
+<tr><th>id</th><th>First</th><th>Last</th><th>Last Update</th></tr>
+{{#each people }}
+<tr>
+  <td>{{ actor_id }}</td>
+  <td>{{ first_name }}</td>
+  <td>{{ last_name }}</td>
+  <td>{{ last_update }}</td>
+</tr>
+{{/each}}
+</table>
 <form enctype="multipart/form-data" method="POST" action="/submit">
 <input name="testfile" id="testfile" type="file">
 <input type="submit">
