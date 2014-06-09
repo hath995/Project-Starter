@@ -33,7 +33,6 @@ function viewHandler(request, reply) {
     reply.view("index", {people: rows});
   });
 }
-var receivedAnswers = [];
 
 function receiveQuestions(request, reply) {
   console.log(request.payload);
@@ -41,11 +40,19 @@ function receiveQuestions(request, reply) {
   reply();
 }
 
+function dataHandler(request, reply) {
+  var page = parseInt(request.query.page);
+  var skip = page*10;
+  mydb.query('SELECT * FROM actor LIMIT '+skip+', 10', function(err, rows, fields) {
+    reply({people:rows});
+  });
+}
+
 server.route([
   { method: 'GET', path: '/', handler: viewHandler},
+  { method: 'GET', path: '/data', handler: dataHandler},
   { method: 'POST', path: '/submit', handler: receiveQuestions,
     config: {}
-  
   },
   { method: 'GET', path: '/vendor/{stuff*}', handler: {directory: {path: "./vendor/"}}}
 ]);
